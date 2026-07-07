@@ -1,3 +1,14 @@
+---
+title: Predict Credit Worthiness
+emoji: 💳
+colorFrom: blue
+colorTo: green
+sdk: gradio
+sdk_version: "5.38.2"
+app_file: app.py
+pinned: false
+---
+
 # Credit Worthiness Prediction
 Predicts whether an applicant is a **good** or **bad** credit risk from
 past financial/demographic data, using classical ML classifiers.
