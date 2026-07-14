@@ -6,7 +6,6 @@ Loads the trained Random Forest model + label encoders and exposes
 a simple form UI where anyone can enter applicant details and get
 a Good/Bad credit prediction with probability.
 """
-
 import gradio as gr
 import joblib
 import pandas as pd
@@ -22,8 +21,7 @@ encoders = joblib.load("models/label_encoders.joblib")
 # This must mirror engineer_features()/encode_features() in the training script.
 CATEGORICAL_COLS = list(encoders.keys())  # includes 'age_group' (derived) too
 
-MODEL_FEATURES = list(model.feature_names_in_)
-
+MODEL_FEATURES = model.feature_names_in_.tolist()
 
 def engineer_and_encode(raw: dict) -> pd.DataFrame:
     df = pd.DataFrame([raw])
@@ -125,5 +123,12 @@ with gr.Blocks(title="Credit Worthiness Predictor") as demo:
         "dataset. Not suitable for real lending decisions.*"
     )
 
+import os
+
 if __name__ == "__main__":
-    demo.launch()
+    port = int(os.environ.get("PORT", 7860))
+    demo.launch(
+        server_name="0.0.0.0",
+        server_port=port,
+        share=False
+    )
